@@ -6,24 +6,21 @@ import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
-
+from ui_form import Ui_MainWindow
 
 class MainWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.load_ui()
+    def __init__(self):
+        super(MainWindow,self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-    def load_ui(self):
-        loader = QUiLoader()
-        path = Path(__file__).resolve().parent / "form.ui"
-        ui_file = QFile(path)
-        ui_file.open(QFile.ReadOnly)
-        loader.load(ui_file, self)
-        ui_file.close()
+        self.ui.pushButton_2.clicked.connect(self.hello)
 
+    def hello(self):
+        print('Hello world')
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    widget = MainWindow()
-    widget.show()
+    window = MainWindow()
+    window.show()
     sys.exit(app.exec())
